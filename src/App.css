@@ -1,0 +1,178 @@
+.home_container{
+  display: flex;
+  justify-content: flex-start;
+  height: 100vh;
+}
+.home_left{
+  display: flex;
+  flex-direction: column;
+}
+.ai_logo_wrapper {
+  position: relative;
+  height: 28px;
+  width: 32px;
+  border-radius: 10px;
+  overflow: hidden;   /* ensures cropping */
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.4);
+}
+.ai_logo {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;  /* crop image, not shrink */
+  border-radius: 10px;
+}
+.top_left_ele{
+  padding: 10px 20px;
+  display: flex;
+  gap: 20px;
+  align-items:center ;
+  justify-content: space-evenly;
+  background-color: #AF9FCD;
+}
+.top_left_ele button {
+  padding: 5px 8px;
+  border-radius: 8px;
+  border: none;
+  background-color: #e2dbef;
+  margin-top: 8px;
+  color: #282c34;
+  font-weight: 400;
+  font-size: 15px;
+  box-shadow:0px 2px 10px rgba(112, 172, 221, 0.686);
+  cursor: pointer;
+}
+.top_left_ele button:hover{
+  color: #72369f;
+}
+.past_chat{
+  padding: 8px 8px;
+  border: none;
+  background-color: #AF9FCD;
+  color: #282c34;
+  font-weight: 600;
+  border-radius: 8px;
+  margin: 10px 15px;
+  cursor: pointer;
+}
+.past_chat:hover{
+    color: #920000;
+}
+.home_right{
+  flex: 1;
+  background-color: #efeaf7;
+  padding-left: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.home_right h2{
+  margin-top: 8px;
+  color: #9785BA;
+  padding-left: 15px;
+}
+.ai_logo-right{
+  height: 60px;
+  width: 60px;
+  border-radius: 90%;
+  object-fit: cover;
+    box-shadow: 0px 2px 20px rgba(0,0,0,0.2);
+}
+.txt_logo{
+  margin-top: 50px;
+  text-align: center;
+  margin-bottom: 50px;
+}
+.txt_logo h3{
+  margin-bottom: 20px;
+  font-size: 40px;
+  font-weight: 400;
+}
+.home_right_content{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+.txt_grids{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:20px;
+  padding: 10px;
+}
+.grid_typos h3,
+.grid_typos p {
+  margin-top: 0;          /* remove browser default margins */
+}
+.grid_typos {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+}
+.input_section{
+  padding: 10px;
+  margin-top: 45px;
+  display:flex ;
+  align-items: center;
+  gap: 20px;
+}
+.input_ele{
+  width: 1046.09px;
+  height: 41px;
+  border-radius: 5px;
+}
+.input_btn{
+  cursor: pointer;
+  padding: 12px 15px;
+  margin: 0 5px;
+  font-size: 20px;
+  font-weight: 400;
+  color: #000000;
+  background-color: #D7C7F4;
+  border-radius: 5px;
+  border: none;
+}
+.chat_container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chat_window {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.chat_message {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.user_msg {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.msg_content {
+  background: #4b3f6b;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 70%;
+}
+
+.msg_time {
+  font-size: 12px;
+  color: #ccc;
+  margin-top: 4px;
+  display: block;
+}
