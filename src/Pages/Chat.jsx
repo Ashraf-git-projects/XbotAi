@@ -1,73 +1,82 @@
-import React, { useState } from "react";
-import sampleData from "../aiData/sampleData.json";
-import userAvatar from "../Assets/boy.png";
+import React, { useEffect, useRef, useState } from "react";
+import boyAvatar from "../Assets/boy.png";
 import aiAvatar from "../Assets/ai_logo.png";
+import Toast from "./Toast";   // ✅ import Toast
 
-function Chat() {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
+function Chat({ messages, setMessages }) {
+  const chatEndRef = useRef(null);
+  const [toastMsg, setToastMsg] = useState("");
 
-  const handleSend = () => {
-    if (!input.trim()) return;
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-    // 1️⃣ Add user message
-    const newMessage = {
-      sender: "You",
-      text: input,
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-    };
+  const handleReaction = (index, reaction) => {
+    const updated = [...messages];
+    updated[index].reaction = reaction;
+    setMessages(updated);
 
-    // 2️⃣ Try to find AI response in sampleData
-    const found = sampleData.find(
-      (item) => item.question.toLowerCase() === input.toLowerCase()
-    );
+    // also update localStorage
+    const saved = JSON.parse(localStorage.getItem("conversations")) || [];
+    if (saved.length > 0) {
+      saved[saved.length - 1].messages = updated;
+      localStorage.setItem("conversations", JSON.stringify(saved));
+    }
 
-    const aiMessage = {
-      sender: "Soul AI",
-      text: found ? found.response : "Sorry, I don’t have an answer for that.",
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-    };
-
-    // 3️⃣ Update state with both messages
-    setMessages((prev) => [...prev, newMessage, aiMessage]);
-    setInput("");
+    // ✅ show toast
+    setToastMsg(reaction === "like" ? "You liked this response 👍" : "You disliked this response 👎");
+    setTimeout(() => setToastMsg(""), 2000);
   };
 
   return (
     <div className="chat_container">
-      <div className="chat_window">
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`chat_message ${msg.sender === "You" ? "user_msg" : "ai_msg"}`}
-          >
-            <img
-              src={msg.sender === "You" ? userAvatar : aiAvatar}
-              alt="avatar"
-              className="avatar"
-            />
-            <div className="msg_content">
-              <strong>{msg.sender}</strong>
-              <p>{msg.text}</p>
-              <span className="msg_time">{msg.time}</span>
-            </div>
-          </div>
-        ))}
-      </div>
+      {messages.map((msg, i) => (
+        <div
+          key={i}
+          className={`chat_message ${msg.sender === "You" ? "user_msg" : "bot_msg"}`}
+        >
+          {msg.sender === "You" ? (
+            <>
+              <div className="msg_text user_bubble">
+                 <span style={{fontWeight:"bold"}}>You</span>
+                <p>{msg.text}</p>
+                <span className="msg_time">{msg.time}</span>
+              </div>
+              <img src={boyAvatar} alt="user" className="avatar" />
+            </>
+          ) : (
+            <>
+              <img src={aiAvatar} alt="bot" className="avatar" />
+              <div className="msg_text bot_bubble">
+                <span style={{fontWeight:"bold"}}>Soul AI</span>
+                <p>{msg.text}</p>
+                <span className="msg_time">{msg.time}</span>
 
-      {/* Input Section */}
-      <div className="input_section">
-        <input
-          type="text"
-          className="input_ele"
-          placeholder="Message Bot AI..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
-        />
-        <button onClick={handleSend} className="input_btn">Ask</button>
-        <button className="input_btn" type="button">Save</button>
-      </div>
+                {/* Like/Dislike */}
+                <div className="bot_actions">
+                  <button
+                    className={`like_btn ${msg.reaction === "like" ? "active" : ""}`}
+                    onClick={() => handleReaction(i, "like")}
+                  >
+                    👍
+                  </button>
+                  <button
+                    className={`dislike_btn ${msg.reaction === "dislike" ? "active" : ""}`}
+                    onClick={() => handleReaction(i, "dislike")}
+                  >
+                    👎
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      ))}
+
+      <div ref={chatEndRef} />
+
+      {/* ✅ Toast Popup */}
+      {toastMsg && <Toast message={toastMsg} onClose={() => setToastMsg("")} />}
     </div>
   );
 }

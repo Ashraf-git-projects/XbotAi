@@ -17,7 +17,7 @@ export default function New() {
               <h3>Hi , What is my location</h3>
               <p>Get immediate ai generated response</p>
             </div>
-            <div className="grid_typos">
+            <div className="grid_typos" id='tmpgrd'>
               <h3>Hi , What is the temperature</h3>
               <p>Get immediate ai generated response</p>
             </div>

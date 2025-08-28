@@ -1,32 +1,39 @@
-.home_container{
+/* =========================
+   LAYOUT: SHELL / HOME
+========================= */
+.home_container {
   display: flex;
-  justify-content: flex-start;
   height: 100vh;
 }
-.home_left{
+
+.home_left {
   display: flex;
   flex-direction: column;
 }
+
+/* Brand logo (top-left) */
 .ai_logo_wrapper {
   position: relative;
   height: 28px;
   width: 32px;
   border-radius: 10px;
-  overflow: hidden;   /* ensures cropping */
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.4);
+  overflow: hidden;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.4);
 }
 .ai_logo {
   position: absolute;
   height: 100%;
   width: 100%;
-  object-fit: cover;  /* crop image, not shrink */
+  object-fit: cover;
   border-radius: 10px;
 }
-.top_left_ele{
+
+/* Left: header row (logo + new chat + pencil) */
+.top_left_ele {
   padding: 10px 20px;
   display: flex;
   gap: 20px;
-  align-items:center ;
+  align-items: center;
   justify-content: space-evenly;
   background-color: #AF9FCD;
 }
@@ -37,16 +44,15 @@
   background-color: #e2dbef;
   margin-top: 8px;
   color: #282c34;
-  font-weight: 400;
   font-size: 15px;
-  box-shadow:0px 2px 10px rgba(112, 172, 221, 0.686);
+  box-shadow: 0px 2px 10px rgba(112, 172, 221, 0.686);
   cursor: pointer;
 }
-.top_left_ele button:hover{
-  color: #72369f;
-}
-.past_chat{
-  padding: 8px 8px;
+.top_left_ele button:hover { color: #72369f; }
+
+/* Left: Past conversations button */
+.past_chat {
+  padding: 8px;
   border: none;
   background-color: #AF9FCD;
   color: #282c34;
@@ -55,124 +61,506 @@
   margin: 10px 15px;
   cursor: pointer;
 }
-.past_chat:hover{
-    color: #920000;
-}
-.home_right{
+.past_chat:hover { color: #920000; }
+
+/* Right side (main area) */
+.home_right {
   flex: 1;
   background-color: #efeaf7;
   padding-left: 5px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100vh;
 }
-.home_right h2{
+.home_right h2 {
   margin-top: 8px;
   color: #9785BA;
   padding-left: 15px;
 }
-.ai_logo-right{
+
+/* Bottom input bar (sticky at bottom) */
+.input_section {
+  padding: 10px;
+  display:flex;
+  align-items: center;
+  gap: 20px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  background: #efeaf7; /* keep same as right bg */
+}
+.input_ele {
+  flex: 1;                 /* fill remaining space */
+  height: 41px;
+  border-radius: 5px;
+  border: 1px solid #d8d6e5;
+  padding: 0 12px;
+  outline: none;
+}
+.input_ele:focus {
+  border-color: #9785BA;
+  box-shadow: 0 0 0 2px rgba(151,133,186,0.2);
+}
+.input_btn {
+  cursor: pointer;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  background-color: #D7C7F4;
+  border-radius: 6px;
+  border: none;
+}
+
+/* =========================
+   LANDING: "NEW" GRID
+========================= */
+.ai_logo-right {
   height: 60px;
   width: 60px;
   border-radius: 90%;
   object-fit: cover;
-    box-shadow: 0px 2px 20px rgba(0,0,0,0.2);
+  box-shadow: 0px 2px 20px rgba(0,0,0,0.2);
 }
-.txt_logo{
+.txt_logo {
   margin-top: 50px;
   text-align: center;
   margin-bottom: 50px;
 }
-.txt_logo h3{
+.txt_logo h3 {
   margin-bottom: 20px;
   font-size: 40px;
   font-weight: 400;
+  color: #2b2a33;
 }
-.home_right_content{
+.home_right_content {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
 }
-.txt_grids{
+
+/* 2x2 suggestion grid */
+.txt_grids {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap:20px;
-  padding: 10px;
+  padding: 10px 15px 0 15px;
 }
 .grid_typos h3,
-.grid_typos p {
-  margin-top: 0;          /* remove browser default margins */
-}
+.grid_typos p { margin-top: 0; }
 .grid_typos {
-  background: #f5f5f5;
+  background: #ffffff;                  /* white as requested */
   padding: 15px;
-  border-radius: 6px;
-  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
-}
-.input_section{
-  padding: 10px;
-  margin-top: 45px;
-  display:flex ;
-  align-items: center;
-  gap: 20px;
-}
-.input_ele{
-  width: 1046.09px;
-  height: 41px;
-  border-radius: 5px;
-}
-.input_btn{
-  cursor: pointer;
-  padding: 12px 15px;
-  margin: 0 5px;
-  font-size: 20px;
-  font-weight: 400;
-  color: #000000;
-  background-color: #D7C7F4;
-  border-radius: 5px;
-  border: none;
-}
-.chat_container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.05);
+  color: #1f2937;
 }
 
-.chat_window {
+/* =========================
+   CHAT: THREAD AREA
+========================= */
+.chat_wrapper {
   flex: 1;
   overflow-y: auto;
-  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px 18px;
 }
 
+/* Message row container (older naming kept for compatibility) */
 .chat_message {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 15px;
-  gap: 10px;
+  margin: 8px 0;
 }
-
-.user_msg {
-  flex-direction: row-reverse;
-  text-align: right;
-}
+.user_msg { justify-content: flex-end; }
+.bot_msg  { justify-content: flex-start; }
 
 .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin: 0 8px;
+}
+
+/* Bubble */
+.msg_text {
+  position: relative;                  /* enables floating actions */
+  max-width: 65%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: #ffffff;                 /* default white */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  color: #111827;
+}
+.user_bubble { background: #e6f0ff; text-align: left; }
+.bot_bubble  { background: #ffffff; }
+
+.msg_time {
+  font-size: 10px;
+  color: #6b7280;
+  display: block;
+  margin-top: 4px;
+}
+
+.bot_actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start; /* align to left inside bubble */
+}
+
+.like_btn, .dislike_btn {
+  border: none;
+  background: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+
+/* Reaction buttons */
+.like_btn, .dislike_btn {
+  border: none;
+  background: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+.like_btn:hover     { color: #16a34a; transform: scale(1.06); }
+.dislike_btn:hover  { color: #dc2626; transform: scale(1.06); }
+.like_btn.active    { color: #22c55e; background: #f0fdf4; transform: scale(1.12); }
+.dislike_btn.active { color: #ef4444; background: #fef2f2; transform: scale(1.12); }
+
+/* =========================
+   TOAST (save confirmation)
+========================= */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #4caf50;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-size: 14px;
+  z-index: 1100;
+  animation: fadeInOut 2.5s ease-in-out;
+}
+@keyframes fadeInOut {
+  0%   { opacity: 0; transform: translateY(20px); }
+  10%  { opacity: 1; transform: translateY(0); }
+  90%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(20px); }
+}
+
+/* =========================
+   FEEDBACK MODAL (Figma)
+========================= */
+.modal_overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.modal_box {
+  background: #faf7ff;                 /* light lavender */
+  border-radius: 12px;
+  padding: 20px;
+  width: 480px;
+  max-width: 90%;
+  box-shadow: 0px 8px 24px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: modalFade .18s ease-in-out;
+}
+@keyframes modalFade {
+  from { opacity: 0; transform: scale(.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Header */
+.modal_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal_title_wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.modal_icon { color: #7c3aed; }        /* purple accent */
+.modal_title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Close button */
+.close_btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #111827;
+  font-size: 18px;
+  line-height: 1;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.close_btn:hover {
+  transform: scale(1.08);
+  opacity: 0.9;
+}
+
+/* Textarea */
+.feedback_area {
+  min-height: 110px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  padding: 10px;
+  font-size: 0.95rem;
+  resize: none;
+  outline: none;
+  background: #fff;
+}
+.feedback_area::placeholder { color: #9ca3af; }
+.feedback_area:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 2px rgba(124,58,237,0.18);
+}
+
+/* Footer */
+.modal_footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.submit_btn {
+  background: #d9c4f3;                 /* soft lavender */
+  color: #111827;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.submit_btn:hover { background: #c4aef0; }
+
+/* =========================
+   HISTORY LIST
+========================= */
+.history_wrapper {
+  padding: 20px 16px 10px;
+}
+.history_content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 6px;
+}
+.history_card {
+  background: #ede7f6;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0px 1px 6px rgba(0,0,0,0.06);
+  cursor: pointer;
+}
+
+/* shared chat row styles used in history cards too */
+.chat_row {
+  display: flex;
+  align-items: flex-start;
+  margin: 10px 0;
+}
+.user_row { flex-direction: row-reverse; }
+.chat_avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  margin: 0 8px;
 }
-
-.msg_content {
-  background: #4b3f6b;
-  color: white;
+.chat_bubble {
+  background: #fff;
   padding: 10px;
-  border-radius: 10px;
-  max-width: 70%;
+  border-radius: 12px;
+  max-width: 60%;
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.08);
+  color: #111827;
+}
+.user .chat_bubble { background: #e6f0ff; }
+.bot  .chat_bubble { background: #f9f9f9; }
+.timestamp {
+  font-size: 12px;
+  color: gray;
+  display: inline-block;
+  margin-top: 6px;
+}
+.feedback_section {
+  font-size: 13px;
+  margin-top: 8px;
+  color: #333;
 }
 
-.msg_time {
-  font-size: 12px;
-  color: #ccc;
-  margin-top: 4px;
-  display: block;
+/* =========================
+   CONVERSATION DETAIL
+========================= */
+.conversation_detail {
+  padding: 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.back_btn {
+  align-self: flex-start;
+  background: transparent;
+  border: none;
+  color: #6b46c1;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.back_btn:hover { text-decoration: underline; }
+.conversation_messages {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+.menu_toggle{
+  display: none;
+}
+
+/* ============ END ============ */
+/* =========================
+   ✅ Mobile-specific fixes only
+   ========================= */
+@media (max-width: 768px) {
+  /* Sidebar hidden by default */
+  .home_container{
+    height: auto;
+    padding: 0;
+    margin: 0;
+  }
+  .home_left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 240px;
+    background: #fcd7ff;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 200;
+    padding-top: 60px; 
+  }
+  .past_chat{
+    color: rgb(17, 17, 20);
+  }
+
+  .home_left.open {
+    transform: translateX(0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  /* Right content */
+  .home_right h2{
+    padding-top: 10px;
+    padding-left: 55px;
+  }
+
+  /* Toggle button */
+  .menu_toggle {
+    display: block;
+    position: fixed; /* fixed so it doesn’t move */
+    top: 15px;
+    left: 15px;
+    background: #9277ac;
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 300;
+  }
+
+  /* BOT AI text/logo sits nicely below toggle */
+  .top_left_ele {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+  }
+
+  /* Sidebar buttons stack under toggle */
+  .new_chat_btn,
+  .past_chat {
+    display: block;
+    width: 80%;
+    text-align: center;
+    
+  }
+
+  /* Overlay behind sidebar */
+  .overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 150;
+  }
+.txt_grids{
+  margin-top: 60px;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+#tmpgrd{
+  display: none;
+}
+  /* Input row */
+  .input_section {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .input_ele {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+
+  .input_btn {
+ cursor: pointer;
+  padding: 20px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  background-color: #D7C7F4;
+  border-radius: 6px;
+  border: none;
+  }
+  
 }
