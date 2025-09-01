@@ -44,7 +44,7 @@ function Home() {
     );
 
     const botMessage = {
-      sender: "Bot", // ✅ reverted back for consistency
+      sender: "Bot",
       text: found ? found.response : "Sorry, Did not understand your query!",
       time: new Date().toLocaleTimeString(),
     };
@@ -106,7 +106,7 @@ function Home() {
 
       {/* Right section */}
       <div className="home_right">
-        {/* ✅ toggle button visible only on mobile (CSS will hide on desktop) */}
+        {/* ✅ toggle button visible only on mobile */}
         <button
           className="menu_toggle"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -114,8 +114,10 @@ function Home() {
           ☰
         </button>
 
-        {/* ✅ heading updated to h1 with correct text */}
-        <h1>Bot AI</h1>
+        {/* ✅ semantic header for test */}
+        <header className="header">
+          <h1>Bot AI</h1>
+        </header>
 
         <div className="chat_wrapper">
           {showChat ? (
@@ -125,7 +127,10 @@ function Home() {
           )}
         </div>
 
-        <div className="input_section">
+        <form
+          className="input_section"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <input
             type="text"
             className="input_ele"
@@ -140,7 +145,7 @@ function Home() {
           <button className="input_btn" type="button" onClick={handleSave}>
             Save
           </button>
-        </div>
+        </form>
       </div>
 
       {showToast && (

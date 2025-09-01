@@ -38,8 +38,10 @@ function ConversationDetail() {
               className="chat_avatar"
             />
             <div className={`chat_bubble ${msg.sender === "You" ? "user" : "bot"}`}>
-              <p>{msg.text}</p>
-              <span className="timestamp">{msg.time}</span>
+             <p className="sender_label">{msg.sender}</p>
+<p>{msg.text}</p>
+<span className="timestamp">{msg.time}</span>
+
 
               {/* ✅ Fix sender check: use "Bot" instead of "Soul AI" */}
               {msg.sender === "Bot" && msg.reaction && (

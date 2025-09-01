@@ -16,6 +16,7 @@ function History() {
     <div className="history_wrapper">
       <h2>Conversation History</h2>
       <div className="history_content">
+        <h2>Past Conversations</h2>
         {conversations.length === 0 ? (
           <p>No saved conversations yet.</p>
         ) : (

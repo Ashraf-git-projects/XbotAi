@@ -368,6 +368,10 @@
 .history_wrapper {
   padding: 20px 16px 10px;
 }
+.history_wrapper h2{
+  text-align: center;
+  color: #9785BA;
+}
 .history_content {
   display: flex;
   flex-direction: column;
