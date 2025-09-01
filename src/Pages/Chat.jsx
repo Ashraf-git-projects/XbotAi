@@ -54,7 +54,7 @@ function Chat({ messages, setMessages }) {
             <>
               <img src={aiAvatar} alt="bot" className="chat_avatar" />
               <div className="chat_bubble bot">
-                <span className="sender_label">Bot AI</span>
+                <span className="sender_label">Soul AI</span>
                 <p>{msg.text}</p>
                 <span className="timestamp">{msg.time}</span>
 
