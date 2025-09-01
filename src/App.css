@@ -37,7 +37,8 @@
   justify-content: space-evenly;
   background-color: #AF9FCD;
 }
-.top_left_ele button {
+.top_left_ele a {
+  text-decoration: none;
   padding: 5px 8px;
   border-radius: 8px;
   border: none;
@@ -52,7 +53,9 @@
 
 /* Left: Past conversations button */
 .past_chat {
+  text-decoration: none;
   padding: 8px;
+  text-align: center;
   border: none;
   background-color: #AF9FCD;
   color: #282c34;
@@ -73,7 +76,7 @@
   justify-content: space-between;
   height: 100vh;
 }
-.home_right h2 {
+.home_right h1 {
   margin-top: 8px;
   color: #9785BA;
   padding-left: 15px;

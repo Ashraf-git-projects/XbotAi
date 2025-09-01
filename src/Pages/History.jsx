@@ -21,20 +21,19 @@ function History() {
         ) : (
           conversations.map((conv, index) => {
             const userMsg = conv.messages.find((m) => m.sender === "You");
-            const botMsg = conv.messages.find((m) => m.sender === "Bot");
+            const botMsg = conv.messages.find((m) => m.sender === "Bot"); // ✅ fixed here
 
             return (
               <div
                 key={index}
                 className="history_card"
                 onClick={() => navigate(`/history/${index}`)}
-                style={{ cursor: "pointer" }}
               >
                 {userMsg && (
                   <div className="chat_row user_row">
                     <img src={boy} alt="user" className="chat_avatar" />
                     <div className="chat_bubble user">
-                      <p>{userMsg.text}</p>
+                      <p className="msg_preview">{userMsg.text}</p>
                       <span className="timestamp">{userMsg.time}</span>
                     </div>
                   </div>
@@ -43,20 +42,10 @@ function History() {
                   <div className="chat_row bot_row">
                     <img src={aiLogo} alt="bot" className="chat_avatar" />
                     <div className="chat_bubble bot">
-                      <p>{botMsg.text}</p>
+                      <p className="msg_preview">{botMsg.text}</p>
                       <span className="timestamp">{botMsg.time}</span>
-
-                      {/* Reaction display */}
                       {botMsg.reaction && (
-                        <div
-                          className="reaction_tag"
-                          style={{
-                            fontSize: "12px",
-                            color: "#666",
-                            marginTop: "4px",
-                            fontStyle: "italic",
-                          }}
-                        >
+                        <div className="reaction_tag">
                           {botMsg.reaction === "like" ? "👍 Liked" : "👎 Disliked"}
                         </div>
                       )}
@@ -65,7 +54,9 @@ function History() {
                 )}
                 <div className="feedback_section">
                   <strong>Feedback:</strong>{" "}
-                  {conv.feedback ? conv.feedback : "None"}
+                  {conv.feedback && conv.feedback.trim()
+                    ? conv.feedback
+                    : "None"}
                 </div>
               </div>
             );

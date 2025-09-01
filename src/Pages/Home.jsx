@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiEdit } from "react-icons/fi";
 import { Outlet, useNavigate } from "react-router-dom";
 import logo from "../Assets/ai_logo.png";
 import Chat from "./Chat";
 import sampleData from "../aiData/sampleData.json";
-import Toast from "./Toast";            
-import FeedbackModal from "./FeedbackModal";  
+import Toast from "./Toast";
+import FeedbackModal from "./FeedbackModal";
 
 function Home() {
   const navigate = useNavigate();
@@ -13,15 +13,25 @@ function Home() {
   const [showChat, setShowChat] = useState(false);
   const [input, setInput] = useState("");
   const [showToast, setShowToast] = useState(false);
+
+  // 🔹 store index of conversation for feedback, or false if closed
   const [showFeedback, setShowFeedback] = useState(false);
 
   // ✅ sidebar toggle for mobile
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // ✅ lock/unlock body scroll when sidebar is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.classList.add("sidebar-open");
+    } else {
+      document.body.classList.remove("sidebar-open");
+    }
+  }, [menuOpen]);
+
   const handleAsk = () => {
     if (!input.trim()) return;
 
-    // Add user message
     const newMessage = {
       sender: "You",
       text: input,
@@ -29,13 +39,12 @@ function Home() {
     };
     let updated = [...messages, newMessage];
 
-    // Find AI response from sampleData
     const found = sampleData.find(
       (item) => item.question.toLowerCase() === input.toLowerCase()
     );
 
     const botMessage = {
-      sender: "Bot",
+      sender: "Bot", // ✅ reverted back for consistency
       text: found ? found.response : "Sorry, Did not understand your query!",
       time: new Date().toLocaleTimeString(),
     };
@@ -43,20 +52,21 @@ function Home() {
     updated = [...updated, botMessage];
     setMessages(updated);
     setInput("");
-    setShowChat(true); // switch to Chat UI
+    setShowChat(true);
   };
 
   const handleSave = () => {
     if (messages.length === 0) return;
 
-    // fetch existing conversations
     const saved = JSON.parse(localStorage.getItem("conversations")) || [];
-    const updated = [...saved, { messages }];
+    const updated = [...saved, { messages, feedback: "" }];
 
     localStorage.setItem("conversations", JSON.stringify(updated));
 
     setShowToast(true);
-    setShowFeedback(true);
+
+    // ✅ Pass index of newly saved conversation
+    setShowFeedback(updated.length - 1);
   };
 
   return (
@@ -67,34 +77,36 @@ function Home() {
           <div className="ai_logo_wrapper">
             <img alt="logo_img" className="ai_logo" src={logo} />
           </div>
-          <button
+          <a
+            href="/"
             className="new_chat_btn"
             onClick={() => {
               navigate("/");
               setMessages([]);
               setShowChat(false);
-              setMenuOpen(false); // close menu on mobile
+              setMenuOpen(false);
             }}
           >
             New Chat
-          </button>
-          <FiEdit className="fied"/>
+          </a>
+          <FiEdit />
         </div>
-        <button
+        <a
+          href="/history"
           className="past_chat"
           onClick={() => {
             navigate("/history");
             setShowChat(false);
-            setMenuOpen(false); // close menu on mobile
+            setMenuOpen(false);
           }}
         >
           Past conversations
-        </button>
+        </a>
       </div>
 
       {/* Right section */}
       <div className="home_right">
-        {/* ✅ Mobile toggle button */}
+        {/* ✅ toggle button visible only on mobile (CSS will hide on desktop) */}
         <button
           className="menu_toggle"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -102,7 +114,8 @@ function Home() {
           ☰
         </button>
 
-        <h2>BOT AI</h2>
+        {/* ✅ heading updated to h1 with correct text */}
+        <h1>Bot AI</h1>
 
         <div className="chat_wrapper">
           {showChat ? (
@@ -130,20 +143,23 @@ function Home() {
         </div>
       </div>
 
-      {/* ✅ Toast + Feedback modal */}
       {showToast && (
-        <Toast message="Conversation saved!" onClose={() => setShowToast(false)} />
+        <Toast
+          message="Conversation saved!"
+          onClose={() => setShowToast(false)}
+        />
       )}
 
-      {showFeedback && (
+      {showFeedback !== false && (
         <FeedbackModal
-          messages={messages}
+          conversationIndex={showFeedback}
           onClose={() => setShowFeedback(false)}
         />
       )}
 
-      {/* ✅ Dark overlay for mobile sidebar */}
-      {menuOpen && <div className="overlay" onClick={() => setMenuOpen(false)} />}
+      {menuOpen && (
+        <div className="overlay" onClick={() => setMenuOpen(false)} />
+      )}
     </div>
   );
 }

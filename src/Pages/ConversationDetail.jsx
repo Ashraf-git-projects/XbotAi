@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import boy from "../Assets/boy.png";
 import aiLogo from "../Assets/ai_logo.png";
 
@@ -20,12 +21,13 @@ function ConversationDetail() {
   return (
     <div className="conversation_detail">
       <button onClick={() => navigate("/history")} className="back_btn">
-        ← Back to History
+        <ArrowLeft size={18} /> Back
       </button>
 
-      <h2>Conversation #{parseInt(id) + 1}</h2>
+      <h2>Conversation {parseInt(id) + 1}</h2>
+
       <div className="conversation_messages">
-        {conversation.messages.map((msg, index) => (
+        {conversation.messages?.map((msg, index) => (
           <div
             key={index}
             className={`chat_row ${msg.sender === "You" ? "user_row" : "bot_row"}`}
@@ -39,17 +41,9 @@ function ConversationDetail() {
               <p>{msg.text}</p>
               <span className="timestamp">{msg.time}</span>
 
-              {/* Reaction display only for bot messages */}
+              {/* ✅ Fix sender check: use "Bot" instead of "Soul AI" */}
               {msg.sender === "Bot" && msg.reaction && (
-                <div
-                  className="reaction_tag"
-                  style={{
-                    fontSize: "12px",
-                    color: "#666",
-                    marginTop: "4px",
-                    fontStyle: "italic",
-                  }}
-                >
+                <div className="reaction_tag">
                   {msg.reaction === "like" ? "👍 Liked" : "👎 Disliked"}
                 </div>
               )}
@@ -59,7 +53,9 @@ function ConversationDetail() {
 
         <div className="feedback_section">
           <strong>Feedback:</strong>{" "}
-          {conversation.feedback ? conversation.feedback : "None"}
+          {conversation.feedback && conversation.feedback.trim()
+            ? conversation.feedback
+            : "None"}
         </div>
       </div>
     </div>

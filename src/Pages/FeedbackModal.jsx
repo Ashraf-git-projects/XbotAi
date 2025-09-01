@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { X } from "lucide-react"; // for close icon, or replace with plain "X"
-import { Lightbulb } from "lucide-react"; // feedback icon
+import { X, Lightbulb } from "lucide-react";
 
-function FeedbackModal({ onClose }) {
+function FeedbackModal({ onClose, conversationIndex = null }) {
   const [feedback, setFeedback] = useState("");
 
   const handleSubmit = () => {
@@ -10,10 +9,12 @@ function FeedbackModal({ onClose }) {
 
     let conversations = JSON.parse(localStorage.getItem("conversations")) || [];
     if (conversations.length > 0) {
-      conversations[conversations.length - 1].feedback = feedback;
-      localStorage.setItem("conversations", JSON.stringify(conversations));
+      const index = conversationIndex ?? conversations.length - 1;
+      if (conversations[index]) {
+        conversations[index].feedback = feedback;
+        localStorage.setItem("conversations", JSON.stringify(conversations));
+      }
     }
-
     onClose();
   };
 
@@ -24,14 +25,14 @@ function FeedbackModal({ onClose }) {
         <div className="modal_header">
           <div className="modal_title_wrap">
             <Lightbulb size={20} className="modal_icon" />
-            <h3 className="modal_title">Provide Additional Feedback</h3>
+            <h3 className="modal_title">Feedback</h3>
           </div>
           <button className="close_btn" onClick={onClose}>
             <X size={20} />
           </button>
         </div>
 
-        {/* Feedback input */}
+        {/* Input */}
         <textarea
           className="feedback_area"
           placeholder="Write your feedback here..."
