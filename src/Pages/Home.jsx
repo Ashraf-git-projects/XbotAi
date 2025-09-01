@@ -44,7 +44,7 @@ function Home() {
     );
 
     const botMessage = {
-      sender: "Bot",
+      sender: "Soul AI",
       text: found ? found.response : "Sorry, Did not understand your query!",
       time: new Date().toLocaleTimeString(),
     };
